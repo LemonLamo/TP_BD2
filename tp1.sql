@@ -130,22 +130,22 @@ SELECT column_name
 FROM user_tab_columns 
 WHERE table_name = 'RESULTAT';
 
+DELETE FROM Resultat WHERE NUMR BETWEEN 1 AND 15; 
 
-INSERT INTO Resultat (NumR, NumPr, TypePr, Resul, Norme, Conclusion) VALUES (1, 1, 'Hemoglobine', 10.2, '12 a 16g/dL', 'Anemie');
-INSERT INTO Resultat (NumR, NumPr, TypePr, Resul, Norme, Conclusion) VALUES (2, 1, 'Plaquettes', '155k', '150k a 400k/mm3', 'Sans Particularite');
-INSERT INTO Resultat (NumR, NumPr, TypePr, Resul, Norme, Conclusion) VALUES (3, 1, 'Leucocytes', 6.2, '4k a 10k/mm3', 'Sans Particularite');
-INSERT INTO Resultat (NumR, NumPr, TypePr, Resul, Norme, Conclusion) VALUES (4, 1, 'Lymphocytes', 4.8, '1.5k a 4k/mm3', 'Poss. Infection');
-INSERT INTO Resultat (NumR, NumPr, TypePr, Resul, Norme, Conclusion) VALUES (5, 2, 'Antig-Covid', 0.2, '>0.5', 'Negatif');
-INSERT INTO Resultat (NumR, NumPr, TypePr, Resul, Norme, Conclusion) VALUES (6, 3, 'Groupage', 'A R+', 'A, B, AB, O -+', 'A+');
-INSERT INTO Resultat (NumR, NumPr, TypePr, Resul, Norme, Conclusion) VALUES (7, 4, 'Culture', 'Staphyl.', '-', 'Infection au Staphylococcus');
-INSERT INTO Resultat (NumR, NumPr, TypePr, Resul, Norme, Conclusion) VALUES (8, 4, 'Sens. Antibiotique', '+Amoxicilline', '-', 'Sensible a l''Amoxicilline');
-INSERT INTO Resultat (NumR, NumPr, TypePr, Resul, Norme, Conclusion) VALUES (9, 5, 'Hemoglobine', 13.2, '12 a 16g/dL', 'Sans Particularite');
-INSERT INTO Resultat (NumR, NumPr, TypePr, Resul, Norme, Conclusion) VALUES (10, 5, 'Plaquettes', '235k', '150k a 400k/mm3', 'Sans Particularite');
-INSERT INTO Resultat (NumR, NumPr, TypePr, Resul, Norme, Conclusion) VALUES (11, 5, 'Leucocytes', 8.1, '4k a 10k/mm3', 'Sans Particularite');
-INSERT INTO Resultat (NumR, NumPr, TypePr, Resul, Norme, Conclusion) VALUES (12, 5, 'Lymphocytes', 2.8, '1.5k a 4k/mm3', 'Sans Particularite');
-INSERT INTO Resultat (NumR, NumPr, TypePr, Resul, Norme, Conclusion) VALUES (13, 6, 'Antig-Covid', 12.6, '>0.5', 'Positif');
-INSERT INTO Resultat (NumR, NumPr, TypePr, Resul, Norme, Conclusion) VALUES (14, 7, 'PCR Covid', 8.2, '>0.5', 'Positif');
-
+INSERT INTO Resultat (NumR, NumPr, TYPERES, Resul, Norme, Conclusion) VALUES (1, 1, 'Hemoglobine', 10.2, '12 a 16g/dL', 'Anemie');
+INSERT INTO Resultat (NumR, NumPr, TYPERES, Resul, Norme, Conclusion) VALUES (2, 1, 'Plaquettes', '155k', '150k a 400k/mm3', 'Sans Particularite');
+INSERT INTO Resultat (NumR, NumPr, TYPERES, Resul, Norme, Conclusion) VALUES (3, 1, 'Leucocytes', 6.2, '4k a 10k/mm3', 'Sans Particularite');
+INSERT INTO Resultat (NumR, NumPr, TYPERES, Resul, Norme, Conclusion) VALUES (4, 1, 'Lymphocytes', 4.8, '1.5k a 4k/mm3', 'Poss. Infection');
+INSERT INTO Resultat (NumR, NumPr, TYPERES, Resul, Norme, Conclusion) VALUES (5, 2, 'Antig-Covid', 0.2, '>0.5', 'Negatif');
+INSERT INTO Resultat (NumR, NumPr, TYPERES, Resul, Norme, Conclusion) VALUES (6, 3, 'Groupage', 'A R+', 'A, B, AB, O -+', 'A+');
+INSERT INTO Resultat (NumR, NumPr, TYPERES, Resul, Norme, Conclusion) VALUES (7, 4, 'Culture', 'Staphyl.', '-', 'Infection au Staphylococcus');
+INSERT INTO Resultat (NumR, NumPr, TYPERES, Resul, Norme, Conclusion) VALUES (8, 4, 'Sens. Antibiotique', '+Amoxicilline', '-', 'Sensible a l''Amoxicilline');
+INSERT INTO Resultat (NumR, NumPr, TYPERES, Resul, Norme, Conclusion) VALUES (9, 5, 'Hemoglobine', 13.2, '12 a 16g/dL', 'Sans Particularite');
+INSERT INTO Resultat (NumR, NumPr, TYPERES, Resul, Norme, Conclusion) VALUES (10, 5, 'Plaquettes', '235k', '150k a 400k/mm3', 'Sans Particularite');
+INSERT INTO Resultat (NumR, NumPr, TYPERES, Resul, Norme, Conclusion) VALUES (11, 5, 'Leucocytes', 8.1, '4k a 10k/mm3', 'Sans Particularite');
+INSERT INTO Resultat (NumR, NumPr, TYPERES, Resul, Norme, Conclusion) VALUES (12, 5, 'Lymphocytes', 2.8, '1.5k a 4k/mm3', 'Sans Particularite');
+INSERT INTO Resultat (NumR, NumPr, TYPERES, Resul, Norme, Conclusion) VALUES (13, 6, 'Antig-Covid', 12.6, '>0.5', 'Positif');
+INSERT INTO Resultat (NumR, NumPr, TYPERES, Resul, Norme, Conclusion) VALUES (14, 7, 'PCR Covid', 8.2, '>0.5', 'Positif');
 
 ALTER TABLE Resultat 
 ADD TypeRes VARCHAR2(50);
@@ -155,6 +155,9 @@ SELECT * FROM resultat;
 
 ALTER TABLE resultat
 DROP COLUMN TypePr;
+
+ALTER TABLE resultat 
+DROP COLUMN 
 
 -- Cardinalité (nombre de lignes)
 SELECT COUNT(*) AS cardinalite FROM Biologiste;

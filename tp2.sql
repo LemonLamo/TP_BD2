@@ -1,4 +1,4 @@
--- Active: 1731451074068@@127.0.0.1@1521@XE@SYSTEM
+-- Active: 1731451074068@@127.0.0.1@1521
 
 --commande d'execution du tp1
 @C:\Users\khbic\OneDrive\Bureau\L3\BD2\TP\tp1.sql --execute le tp1
