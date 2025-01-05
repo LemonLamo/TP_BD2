@@ -1,5 +1,7 @@
 -- Active: 1731451074068@@127.0.0.1@1521@XE@SYSTEM
 
+--LAMIA KOUCEM GROUPE 1
+
 
 --lister les contraines d'integrité du schema
 SELECT 
@@ -12,14 +14,18 @@ SELECT
 --C pour check, P pour primary key, U pour unique, R pour foreign key
 
 --question 2
+--etendre la liste des roles possibles 
 ALTER TABLE BIOLOGISTE
 ADD CONSTRAINT chk_role_biologiste
 CHECK (RoleB IN ('Biologiste-Responsable', 'Ing-Qualité', 'Aide-Laboratoire', 'Secrétaire', 'Technicien', 'Ing-Informatique','Biologist-Médical', 'B-M à Domicile'));
 
---question 3 exiger une date
+--question 3 exiger une date pour qu'elle sois anterieur a la date d'aujoudhui
 ALTER TABLE PATIENT
 ADD CONSTRAINT chk_date_naissance
 CHECK (DateNaissance < SYSDATE);
+
+--tester avec quelques insertions 
+INSERT INTO Patient (NumP, Nom, Prenom, DateNaissance) VALUES (17, 'Koucem', 'Lamia', TO_DATE('2025-02-10', 'YYYY-MM-DD'));
 
 select * from patient;
 --question 4 : ingenieur pas biomedical
@@ -55,7 +61,7 @@ WHERE
 
 --pour supprimer completement la contraine : 
 ALTER TABLE EffectuePrelevement DROP CONSTRAINT FK_EFFECTUEPRELEVEMENT_BIOLOGISTE;
-
+--la conclusion ici est que l'on peut drop la table apres desactivation de la contrainte de la clé etrangere
 DROP TABLE Biologiste;
 
 --partie 2 :
@@ -133,12 +139,12 @@ END;
 --verifier si la fonction a ete crée
 SELECT object_name, object_type
 FROM user_objects
-WHERE object_name = 'V_NB_PRELEVEMENT'
+WHERE object_name = 'NB_PRELEVEMENT_BIOLOGISTE'
   AND object_type = 'FUNCTION';
 
 
 SELECT * FROM EFFECTUEPRELEVEMENT;
---procedure pour ajouter un prelevement 
+--procedure pour ajouter un prelevement a partir de tout les autres attributs
 
 create or replace Procedure Ajouterprelevement (
     p_numb INT,
@@ -201,21 +207,23 @@ BEGIN
 
 ALTER TABLE Biologiste ADD Nb_Pr INTEGER DEFAULT 0;
 
---trigger pour mettre a jour nb_pr
+--trigger pour mettre a jour nb_pr automatiquement
 
-CREATE OR REPLACE TRIGGER T1_Update_Nb_Pr
-AFTER INSERT OR DELETE ON EffectuePrelevement
-FOR EACH ROW
-BEGIN
-    IF INSERTING THEN
-        UPDATE Biologiste
-        SET Nb_Pr = Nb_Pr + 1
-        WHERE NumB = :NEW.NumB;
-    ELSIF DELETING THEN
-        UPDATE Biologiste
-        SET Nb_Pr = Nb_Pr - 1
-        WHERE NumB = :OLD.NumB;
-    END IF;
-END;
+Create or replace trigger nb_pr_auto
+After insert or delete or update on EffectuePrelevement
+For each row
+Begin
+ if inserting then
+    update Biologiste set Nb_Pr = Nb_Pr+1 where NumB = :new.NumB;
+  endif;
+if deleting then
+    update Biologiste set Nb_Pr = Nb_Pr-1 where NumB = :old.NumB;
+endif;
+if updating then if(:new.NumB != :old.NumB) then
+    update Biologiste set Nb_Pr = Nb_Pr+1 where NumB = :new.NumB;
+	update Biologiste set Nb_Pr = Nb_Pr-1 where NumB = :old.NumB;
+endif;
+endif;
+End;
 /
 
